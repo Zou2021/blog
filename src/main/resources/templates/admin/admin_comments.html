@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="admin/module/macros :: head('评论列表')"></div>
+<body class="app sidebar-mini rtl">
+<main class="app-content">
+    <div th:replace="admin/module/macros :: header"></div>
+    <div th:replace="admin/module/macros :: sidebar"></div>
+    <!-- 评论列表 -->
+    <h3>
+        <i class="fa fa-comments"></i> 评论列表
+    </h3>
+    <div id="comment-container" class="ui teal segment">
+        <div class="content" style="padding-top: 10px">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">URL</th>
+                    <th scope="col">昵称</th>
+                    <th scope="col">内容</th>
+                    <th scope="col">发布时间</th>
+                    <th scope="col">IP属地</th>
+                    <th scope="col">状态</th>
+                    <th scope="col">父节点ID</th>
+                    <th scope="col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="comment:${isNotVisibleComments}">
+                    <td th:text="${comment.getBlogUrl()}"></td>
+                    <td th:text="${comment.getNickname()}"></td>
+                    <td th:text="${comment.getContent()}" style="width: 15px;height: 15px;"></td>
+                    <td th:text="${#dates.format(comment.getCreateTime(), 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${comment.getProvince()}"></td>
+                    <td th:text="未通过" th:if="${comment.getIsVisible()}==0" style="color: red;font-weight:bold"></td>
+                    <td th:text="已通过" th:if="${comment.getIsVisible()}==1"></td>
+                    <td th:text="${comment.getParentId()}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-success" th:href="@{/post/}+${comment.getBlogUrl()}"
+                           th:if="${comment.getBlogUrl()}!='about'" target="_blank">查看</a>
+                        <a class="btn btn-sm btn-outline-success" th:href="@{/}+${comment.getBlogUrl()}"
+                           th:if="${comment.getBlogUrl()}=='about'" target="_blank">查看</a>
+                        <a class="btn btn-sm btn-primary"
+                           th:href="@{/admin/comments/visible/}+${comment.getId()}"
+                           th:if="${comment.getIsVisible()}==0">通过</a>
+                        <a class="btn btn-sm btn-outline-primary"
+                           th:href="@{/admin/comments/invisible/}+${comment.getId()}"
+                           th:if="${comment.getIsVisible()}==1">屏蔽</a>
+                        <a class="btn btn-sm btn-danger"
+                           th:href="@{/admin/comments/remove/}+${comment.getId()}">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>

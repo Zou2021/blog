@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:thSys="">
+<div th:replace="admin/module/macros :: head('主题管理')"></div>
+<body class="app sidebar-mini rtl">
+	<main class="app-content">
+	<div th:replace="admin/module/macros :: header"></div>
+	<div th:replace="admin/module/macros :: sidebar"></div>
+	<div class="app-title">
+		<div>
+			<h1>
+				<i class="fa fa-book"></i>主题管理
+			</h1>
+		</div>
+		<ul class="app-breadcrumb breadcrumb">
+			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+			<li class="breadcrumb-item"><a href="/admin/article">主题管理</a></li>
+			<li class="breadcrumb-item">所有主题</li>
+		</ul>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="tile">
+			<input type="hidden" id="themeId">
+			<button class="btn btn-sm btn-outline-primary mb-3" onclick="saveTheme()">添加主题</button>
+				<div class="table-responsive">
+					<table class="table m-auto table-striped table-bordered table-hover text-center" id="">
+						<tr>
+							<td>主题名</td>
+							<td>主题描述</td>
+							<td>预览图</td>
+							<td>创建时间</td>
+							<td>操作</td>
+						</tr>
+						<tr th:each="theme : ${info.list}">
+						<td th:text="${theme.themeName}"></td>
+						<td th:text="${theme.themeDescribe}"></td>
+						<td><img style="width: 100px;height: 60px" th:src="${theme.themeImg}"></td>
+						<td th:text="${#dates.format(theme.createTime,'yyyy/MM/dd HH:mm:ss')}"></td>
+						<td>
+						<button class="btn btn-sm btn-secondary" th:onclick="'javascript:themeEnabled(\''+${theme.id}+'\')'" th:disabled="${theme.themeStatus == 1}">
+						<th:block th:if="${theme.themeStatus == 1}">已启用</th:block>
+						<th:block th:if="${theme.themeStatus == 0}" >启用</th:block>
+						</button>
+						<button class="btn btn-sm btn-primary" th:onclick="'javascript:themeOption(\''+${theme.themeName}+'\')'">设置</button>
+						<button th:onclick="'javascript:showModel('+${theme.id}+')'"
+										class="btn btn-sm btn-outline-danger">删除</button>
+						</td>
+						</tr>
+						 <tr th:unless="${info.list.total} != 0">
+							<td th:text="暂无主题" th:attr="colspan='7',align='center'" ></td>
+						</tr> 
+					</table>
+				</div>
+				 <div th:replace="admin/module/macros :: pageAdminNav(${info})"></div>
+			</div>
+		</div>
+	</div>
+	</main>
+	<div th:replace="admin/module/macros :: remove"></div> 
+	<div th:replace="admin/module/macros :: comm"></div>
+	<div th:replace="admin/module/macros :: bootstrapValidator"></div>
+	<script type="text/javascript" src="/static/plugins/layer/layer.js"></script>
+	 <script type="text/javascript">
+	 $(function(){
+		 $("#themeForm").bootstrapValidator({
+				message: 'This value is not valid',
+	           　		feedbackIcons: {
+	               　　　　　　　　valid: 'glyphicon glyphicon-ok',
+	               　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+	               　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+	           　　　　　　　　   },
+	            fields: {
+	            	themeName: {
+	                   message: '主题名称验证失败',
+	                   validators: {
+	                       notEmpty: {
+	                           message: '主题名称不能为空'
+	                       }
+	                   }
+	               }
+	           }
+			}); 
+	 });
+	 //保存主题
+	 function saveTheme(){
+		 var width=500;
+		 var height=300;
+		//如果是移动端，就使用自适应大小弹窗
+     	if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+     	    width = 'auto';
+     	    height = 'auto';
+     	}
+		 layer.open({
+			 type : 1,
+			 title : '新增主题',
+			 anim : 2,
+			 maxmin : true,
+			 area: [width + 'px', height + 'px'],
+			 content: $('#saveTheme'),
+			 btn: ['保存', '取消'],
+			 yes: function(index, layero){
+			 var bootstrapValidator = $("#themeForm").data("bootstrapValidator");
+			 bootstrapValidator.validate();
+			 if(bootstrapValidator.isValid()){
+				 var obj=$("#themeForm").serialize();
+				 $.ajax({
+					type :"post",
+					async :false,
+					url :"/admin/theme/saveTheme",
+					data :obj,
+					dataType :"json",
+					success :function(data){
+						if(data.flag==true){
+							 layer.close(index); 
+							 window.location.href = "/admin/theme"; 
+						}else{
+							 layer.alert(data.msg);
+						}
+					}
+				 });
+				}
+			 },
+     	     cancel: function(index) {
+    	        return true;
+    	     }
+		});
+	 }
+	function showModel(id) {
+		$("#themeId").val(id);
+		$("#removeModal").modal();
+	}
+	function remove(){
+		window.location.href = "/admin/theme/remove?id="
+			+ $("#themeId").val();
+	}
+	
+	//设置项
+	function themeOption(themeName) {
+		layer.open({
+			type : 2,
+			title : themeName+'主题设置',
+			anim : 2,
+			area : [ '90%', '90%' ],
+			shadeClose : true,
+			content : "/admin/theme/"+themeName+"?themeName=" + themeName,
+			maxmin : true
+		});
+	} 
+	//启用主题
+	function themeEnabled(id){
+		$.ajax({
+			type :"post",
+			url :"/admin/theme/themeEnabled",
+			data :{"id":id},
+			dataType :"json",
+			success :function(data){
+				 if(data.flag==true){
+					 $.toast({
+                         text: data.msg,
+                         heading: '提示',
+                         icon: 'success',
+                         showHideTransition: 'fade',
+                         allowToastClose: true,
+                         hideAfter: 1000,
+                         stack: 1,
+                         position: 'top-center',
+                         textAlign: 'left',
+                         loader: true,
+                         loaderBg: '#ffffff',
+                         afterHidden: function () {
+                        	 location.reload();
+                         }
+                     });
+				}else{
+					showMsg(data.msg,"error",3000);
+				} 
+			}
+		})		 
+	}
+	</script>
+	<div class="col" id="saveTheme" style="display: none;">
+		<div class="row">
+			<div class="col-md-12">
+				<form id="themeForm">
+					<div class="form-group row mt-3">
+						<label class="control-label col-md-4">主题名称：</label>
+						<div class="col-md-8">
+							<input class="form-control" type="text" name="themeName">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="control-label col-md-4">主题描述：</label>
+						<div class="col-md-8">
+							<input class="form-control" type="text" name="themeDescribe">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="control-label col-md-4">主题预览图：</label>
+						<div class="col-md-8">
+							<input class="form-control" type="text" name="themeImg">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

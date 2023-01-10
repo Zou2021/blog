@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:thSys="">
+ <div th:replace="admin/module/macros :: head"></div>
+<body class="app sidebar-mini rtl">
+	<main class="app-content">
+	<div th:replace="admin/module/macros :: header"></div>
+	<div th:replace="admin/module/macros :: sidebar"></div>
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-dashboard"></i>仪表盘</h1>
+          <p>欢迎召田最帅boy</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small primary coloured-icon"><i class="icon fa fa-book fa-3x"></i>
+            <div class="info">
+              <h4>文章</h4>
+              <p><b>5</b></p>
+            </div>
+          </div>
+        </div>
+        
+      <!-- <div class="row">
+        <div class="col-md-6">
+          <div class="tile">
+            <h3 class="tile-title">Monthly Sales</h3>
+            <div class="embed-responsive embed-responsive-16by9">
+              <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="tile">
+            <h3 class="tile-title">Support Requests</h3>
+            <div class="embed-responsive embed-responsive-16by9">
+              <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="tile">
+            <h3 class="tile-title">最新文章</h3>
+            <table class="table">
+            <tr>
+            <td>23213</td>
+            </tr>
+            </table>
+            </div>
+        </div>
+       <div class="col-md-6">
+          <div class="tile">
+            <h3 class="tile-title">最新评论</h3>
+            <table class="table">
+            <tr>
+            <td>23213</td>
+            </tr>
+            </table>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="tile">
+            <h3 class="tile-title">最新日志</h3>
+            <table class="table">
+            <tr>
+            <td>23213</td>
+            </tr>
+            </table>
+            </div>
+        </div>
+      </div>
+    </main>
+    <div th:replace="admin/module/macros :: comm" ></div>
+  </body>
+</html>

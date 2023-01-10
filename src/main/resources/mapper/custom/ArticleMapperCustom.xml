@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.zou.blog.mapper.custom.ArticleMapperCustom">
+	<sql id="whereArticle">
+	<where>1=1
+	<if test="status != null">
+		and article_status=#{status}
+	</if>
+	<if test="post != null">
+	  and article_post=#{post}
+	</if>
+	</where>
+	</sql>
+	<sql id="whereArticleCustom">
+	<where>1=1
+	<if test="articleStatus != null">
+		and article_status=#{articleStatus}
+	</if>
+	<if test="articlePost != null">
+	  and article_post=#{articlePost}
+	</if>
+	</where>
+	</sql>
+	<!-- <select id="findPageArticle"
+		resultType="com.songhaozhi.mayday.model.domain.ArticleCustom" parameterType="com.songhaozhi.mayday.model.domain.ArticleCustom">
+		SELECT *,(SELECT GROUP_CONCAT(mayday_category.category_name) from
+		mayday_category where category_id in(SELECT category_id FROM
+		mayday_article_category WHERE article_id=a.id) ) categorysName
+		,(SELECT GROUP_CONCAT(mayday_tag.tag_name) FROM mayday_tag
+		WHERE tag_id in (SELECT tag_id FROM mayday_article_tag WHERE
+		article_id = a.id)) tagsName,
+		(SELECT GROUP_CONCAT(mayday_tag.tag_url) FROM mayday_tag
+		WHERE tag_id in (SELECT tag_id FROM mayday_article_tag WHERE
+		article_id = a.id)) tagsUrl,
+		(SELECT GROUP_CONCAT(mayday_category.category_url) from
+		mayday_category where category_id in(SELECT category_id FROM
+		mayday_article_category WHERE article_id=a.id) ) categorysUrl
+		FROM mayday_article a 
+		<include refid="whereArticleCustom"></include>
+		ORDER BY article_updatetime DESC,article_newstime DESC
+	</select> -->
+	<select id="findPageArticle"
+		resultType="com.zou.blog.model.domain.ArticleCustom" parameterType="com.zou.blog.model.domain.ArticleCustom">
+			SELECT
+			ma.*,
+			GROUP_CONCAT(distinct mc.category_name ) AS categorysName,
+			GROUP_CONCAT(distinct mc.category_url ) AS categorysUrl,
+			GROUP_CONCAT(distinct mt.tag_name ) AS tagsName,
+			GROUP_CONCAT(distinct mt.tag_url ) AS tagsUrl
+			FROM
+			mayday_article ma
+			LEFT JOIN mayday_article_category mac ON ma.id = mac.article_id
+			LEFT JOIN mayday_category mc ON mc.category_id = mac.category_id
+			LEFT JOIN mayday_article_tag mat ON ma.id = mat.article_id
+			LEFT JOIN mayday_tag mt ON mt.tag_id = mat.tag_id
+			<include refid="whereArticleCustom"></include>
+			GROUP BY
+			ma.id ORDER BY article_updatetime DESC,article_newstime DESC
+	</select>
+	<select id="findAllArticle"
+		resultType="com.zou.blog.model.domain.ArticleCustom">
+		SELECT * FROM mayday_article a 
+		<include refid="whereArticle"></include>
+	</select>
+
+	<select id="countByStatus" resultType="integer">
+		SELECT COUNT(*) FROM mayday_article
+		<include refid="whereArticle"></include>
+	</select>
+	
+	<update id="updateStatus" parameterType="int">
+	update mayday_article set article_status=#{status} where id = #{id}
+	</update>
+	
+	<select id="findByArticleId" resultType="com.zou.blog.model.domain.ArticleCustom" parameterType="Integer">
+	SELECT a.id,a.user_id,a.article_content,a.article_content_md,a.article_newstime,a.article_summary,a.article_thumbnail,a.article_title,article_type,a.article_comment,a.article_url,GROUP_CONCAT(distinct  b.category_id) categorys ,GROUP_CONCAT(distinct  c.tag_id) tags
+	FROM mayday_article a
+	LEFT JOIN mayday_article_category b
+	on b.article_id=a.id
+	LEFT JOIN mayday_article_tag c
+	on a.id=b.article_id
+	AND b.article_id=c.article_id
+	WHERE a.id=#{id}
+	</select>
+	
+	<select id="findDateAndCount" resultType="com.zou.blog.model.dto.ArchiveBo">
+	select DATE_FORMAT(article_newstime, '%Y年%m月') as date, count(*) as count from mayday_article
+	where article_status = 0
+	group by date order by date desc
+	</select>
+	
+	<select id="findRepeatByUrl" parameterType="String" resultType="Integer">
+	SELECT COUNT(*) FROM mayday_article WHERE article_url = #{articleUrl}
+	</select>
+	<select id="findByArticleUrl" resultType="com.zou.blog.model.domain.ArticleCustom">
+		SELECT
+			ma.*,
+			GROUP_CONCAT(distinct mc.category_name ) AS categorysName,
+			GROUP_CONCAT(distinct mc.category_url ) AS categorysUrl,
+			GROUP_CONCAT(distinct mt.tag_name ) AS tagsName,
+			GROUP_CONCAT(distinct mt.tag_url ) AS tagsUrl
+			FROM
+			mayday_article ma
+			LEFT JOIN mayday_article_category mac ON ma.id = mac.article_id
+			LEFT JOIN mayday_category mc ON mc.category_id = mac.category_id
+			LEFT JOIN mayday_article_tag mat ON ma.id = mat.article_id
+			LEFT JOIN mayday_tag mt ON mt.tag_id = mat.tag_id
+			WHERE article_url=#{articleUrl} and article_status = #{status}
+			GROUP BY ma.id 
+	</select>
+	
+	<select id="findArtileByCategory" resultType="com.zou.blog.model.domain.ArticleCustom">
+	SELECT * FROM mayday_article WHERE id in 
+	(SELECT article_id FROM mayday_article_category WHERE 
+	category_id=(SELECT category_id FROM mayday_category WHERE category_url=#{category.categoryUrl})) and article_status =#{status} ORDER BY article_updatetime DESC,article_newstime DESC
+	</select>
+	
+	<select id="findArtileByTag" resultType="com.zou.blog.model.domain.ArticleCustom">
+	SELECT * FROM mayday_article WHERE id in 
+	(SELECT article_id FROM mayday_article_tag WHERE 
+	tag_id=(SELECT tag_id FROM mayday_tag WHERE tag_url=#{tag.tagUrl})) and article_status =#{status} ORDER BY article_updatetime DESC,article_newstime DESC
+	</select>
+</mapper>

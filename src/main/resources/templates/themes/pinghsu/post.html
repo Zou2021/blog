@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="themes/pinghsu/header::header(${article.articleTitle},${article.tagsName})"></div>
+<body>
+<article class="main-content page-page" itemscope="" itemtype="http://schema.org/Article">
+    <div class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            <a th:href="@{'/post/'+${article.articleUrl}}" th:text="${article.articleTitle}" data-no-instant=""></a>
+        </h1>
+        <div class="post-data">
+            <i class="fa fa-calendar"></i>
+            <time itemprop="datePublished"
+                  th:text="${#dates.format(article.articleNewstime,'yyyy-MM-dd HH:mm')}"></time>
+            &nbsp;
+            <i class="fa fa-th-large"></i>
+            <th:block th:utext="${commons.show_categories(article.categorysUrl,article.categorysName)}"/>
+            &nbsp;
+            <i class="fa fa-clock-o"></i>
+            <th:block th:text="${readTime}+'分钟'"></th:block>
+            &nbsp;
+            <i class="fa fa-eye"></i>
+            <th:block th:text="${article.articleViews}+'浏览'"></th:block>
+            &nbsp;
+            <i class="fa fa-comments"></i>
+            <th:block th:text="${commentCount}+'评论'"></th:block>
+        </div>
+    </div>
+    <div id="post-content" class="post-content" itemprop="articleBody">
+        <p class="post-tags" th:utext="${commons.show_tags(article.tagsUrl,article.tagsName)}"></p>
+        <!--公众号引流-->
+<!--        <div id="container" style="padding: 15px 0 0 0">-->
+            <th:block th:utext="${article.articleContent}"/>
+            <div style="text-align: right;padding-bottom: 10px;padding-right: 10px;">
+                <a id="articleHref" th:href="@{/post/{url}(url=${article.articleUrl})}"></a>
+                <button type="button" id="copy" class="small ui teal basic button">
+                    <i class="copy icon"></i>&nbsp;复制文章链接
+                </button>
+            </div>
+            <p class="post-info" style="padding-bottom: 0">
+                本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名，转载请标明出处。<br/>最后编辑时间为:
+                <th:block th:text="${#dates.format(article.articleUpdatetime,'yyyy/MM/dd HH:mm:ss')}"/>
+            </p>
+<!--        </div>-->
+        <!--赞赏-->
+        <div class="ui center aligned basic segment">
+            <div class="ui blue basic circular button" notice-key="msg" for-key="name"
+                 for-value="html" contenteditable="false" onclick="showdiv()">👍赞赏👍
+            </div>
+        </div>
+        <div id="img_div" style="display:none;"><img
+                src="https://www.hqxiaozou.top/upload/2022/8/payQRCode20220814120847524.png"
+                style="width: 280px;height: 280px"/></div>
+        <iframe width=0 height=0 frameborder=0 id="myiframe" name="myiframe"></iframe>
+        <!-- 表单提交区 -->
+        <form target="myiframe">
+            <div id="comment-form" class="ui form">
+                <input type="hidden" name="blogid" th:value="${article.id}"/>
+                <input type="hidden" name="blogUrl" th:value="${article.articleUrl}"/>
+                <input type="hidden" name="parentCommentId" value="-1">
+                <div class="field">
+                    <textarea id="aaa" name="content" placeholder="欢迎高质量的评论，低质的评论不会过审"
+                              required="required"></textarea>
+                </div>
+                <div class="fields">
+                    <div class="field m-mobile-wide m-margin-bottom-small">
+                        <div class="ui left icon input">
+                            <img id="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=1565453341&s=100"
+                                 class="ui centered mini circular image" style="margin-top: 11px">
+                        </div>
+                    </div>
+                    <div class="field m-mobile-wide m-margin-bottom-small" style="padding-top: 10px">
+                        <div class="ui left icon input">
+                            <i class="qq icon"></i>
+                            <input type="text" id="QQ" name="qq" placeholder="输入QQ号自动获取昵称头像"
+                                   required="required"/>
+                        </div>
+                    </div>
+                    <div class="field m-mobile-wide m-margin-bottom-small" style="padding-top: 10px">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" id="nickname" name="nickname" placeholder="昵称"
+                                   required="required"/>
+                        </div>
+                    </div>
+                    <div class="field m-mobile-wide m-margin-bottom-small" style="padding-top: 10px">
+                        <div class="ui left icon input">
+                            <!--                            <i class="mail icon"></i>-->
+                            <input type="text" id="ccc" name="email" placeholder="邮箱"
+                                   hidden="hidden" required="required">
+                        </div>
+                    </div>
+                    <div class="field m-margin-bottom-small m-mobile-wide" style="padding-top: 10px">
+                        <button id="comment-btn" type="submit" class="ui violet button m-mobile-wide "><i
+                                class="edit icon"></i>发布
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- 评论列表 -->
+        <div id="comment-container" class="ui teal segment">
+            <div th:fragment="commentList">
+                <div class="ui threaded comments" style="max-width: 100%">
+                <span><i class="app-menu__icon fa fa-commenting"></i>&nbsp;
+                        <th:block th:text="${commentCount}"></th:block>
+                        条评论
+                    </span>
+                    <img src="https://img-blog.csdnimg.cn/ae47fb2c9abf46d49f1266aa98a1d29b.jpeg"
+                         th:if="${commentCount}==0">
+                    <div class="comment" th:each="comment : ${comments}">
+                        <a class="avatar">
+                            <img th:src="@{${comment.avatar}}">
+                        </a>
+                        <div class="content">
+                            <a class="author">
+                                <span th:text="${comment.nickname}"></span>
+                                <a class="ui teal mini tag label m-padded-tb-tiny"
+                                   th:if="${comment.avatar}=='https://img-blog.csdnimg.cn/a4e106d8f8934ad397f852ebfeba8c55.png'">博主</a>
+                                <a class="ui teal mini tag label m-padded-tb-tiny"
+                                   th:if="${comment.avatar}=='https://img-blog.csdnimg.cn/0381d4b0e4234286a4c7d6cb45d1701f.bmp'">blogger's
+                                    baby</a>
+                            </a>
+                            <div class="metadata">
+                                <span class="author" style="color: #1b95e0"
+                                      th:if="${comment.sort}<=0">置顶</span>
+                                <span class="date"
+                                      th:text="${#dates.format(comment.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                            </div>
+                            &nbsp;
+                            <span th:text="'来自'+${#strings.substring(comment.province,0,2)}"
+                                  style="color: darkgray"></span>
+                            <div class="text">
+                                <p style="white-space: pre-wrap; background:#fafafa repeating-linear-gradient(-45deg,#fff,#fff 1.125rem,transparent 1.125rem,transparent 2.25rem);box-shadow:0 2px 5px rgba(0,0,0,.15);margin:20px 0;padding:15px;border-radius:5px;font-size:14px;color:#555"
+                                   th:utext="${comment.content}"></p>
+                            </div>
+                            <div class="actions">
+                                <a class="reply" data-commentid="1" data-commentnickname="Matt"
+                                   th:attr="data-commentid=${comment.id}, data-commentnickname=${comment.nickname}"
+                                   onclick="reply(this)">
+                                    <button class="mini ui teal basic circular button">回复</button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="comments" th:if="${#arrays.length(comment.replyComments)} gt 0">
+                            <div class="comment" th:each="reply : ${comment.replyComments}">
+                                <a class="avatar">
+                                    <img th:src="@{${reply.avatar}}">
+                                </a>
+                                <div class="content">
+                                    <a class="author">
+                                        <span th:text="${reply.nickname}"></span>
+                                    </a>
+                                    <span> @ </span>
+                                    <a class="author" style="color: teal">
+                                        <span th:text="|${reply.parentName}|"></span>
+                                    </a>
+                                    <div class="metadata">
+                                        <span class="date"
+                                              th:text="${#dates.format(reply.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                                    </div>
+                                    &nbsp;
+                                    <span th:text="'来自'+${#strings.substring(reply.province,0,2)}"
+                                          style="color: darkgray"></span>
+                                    <div class="text">
+                                        <p style="white-space: pre-wrap; background:#fafafa repeating-linear-gradient(-45deg,#fff,#fff 1.125rem,transparent 1.125rem,transparent 2.25rem);box-shadow:0 2px 5px rgba(0,0,0,.15);margin:20px 0;padding:15px;border-radius:5px;font-size:14px;color:#555"
+                                           th:utext="${reply.content}"></p>
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply" data-commentid="1" data-commentnickname="Matt"
+                                           th:attr="data-commentid=${reply.id}, data-commentnickname=${reply.nickname}"
+                                           onclick="reply(this)">
+                                            <button class="mini ui teal basic circular button">回复</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+<div th:replace="themes/pinghsu/footer :: footer"></div>
+<!--<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>-->
+<script type="application/javascript">
+    <!--根据QQ自动获取头像信息-->
+    $('#QQ').blur(function () {
+        var QQ = $("#QQ").val();
+        $.ajax({
+            url: "https://api.usuuu.com/qq/" + QQ,
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                console.log(result["data"].name, result["data"].avatar);
+                $("#nickname").val(result["data"].name);
+                var obj = document.getElementById("avatar");
+                obj.src = result["data"].avatar;
+                $("#avatar").val(result["data"].avatar);
+                $("[name='email']").val(QQ + '@qq.com');
+            }
+        });
+    });
+
+    //点击图片查看大图
+    const img = document.images;
+    for (let i = 0; i < img.length; i++) {
+        $(img[i]).bind("click", function () {
+            //新开一个页面
+            // window.open($(this).attr('src'), '_blank');
+            window.location.href = $(this).attr('src');
+        });
+
+        //当图片不存在时，替换为默认图片
+        // let error = false;
+        // if (!img[i].complete) {
+        //     error = true;
+        // }
+        // if (typeof img[i].naturalWidth != "undefined" && img[i].naturalWidth === 0) {
+        //     error = true;
+        // }
+        // if (error) {
+        //     img[i].src = "https://img-blog.csdnimg.cn/violation-del.png#pic_center";
+        // }
+    }
+
+    //弹出赞赏图片
+    function showdiv() {
+        if (document.getElementById("img_div").style.display === "block") {
+            document.getElementById("img_div").style.display = "none";
+        } else {
+            document.getElementById("img_div").style.display = "block";
+        }
+    }
+
+    //回复
+    var replyName;
+    var parentCommentId1 = 0;
+
+    function reply(obj) {
+        let commentId = $(obj).data('commentid');
+        let commentNickname = $(obj).data('commentnickname');
+        replyName = commentNickname;
+        parentCommentId1 = commentId;
+        //添加信息到评论表单
+        $("[name='content']").attr("placeholder", "@" + commentNickname).focus();
+        $("[name='parentCommentId']").val(commentId);
+        //滚动到评论表单
+        $(window).scrollTo($('#comment-form'), 500);
+    }
+
+    $(function () {
+        $('#comment-btn').click(function () {
+            var blogid = $("input[name='blogid']").val().trim();
+            var blogUrl = $("input[name='blogUrl']").val().trim();
+            var tem = $("textarea[name='content']").val().trim();
+            let url = "<strong><a href =" + tem + " target=_blank>" + tem + "</a></strong>"
+            if (tem.startsWith("http://") || tem.startsWith("https://")) {
+                var content = url;
+            } else {
+                content = tem;
+            }
+            var nickname = $("input[name='nickname']").val().trim();
+            var email = $("input[name='email']").val().trim();
+            var avatar = $("#avatar").val();
+            var parentId = $("input[name='parentCommentId']").val();
+            if (replyName != null) {
+                var parentName = replyName;
+            } else {
+                parentName = nickname;
+            }
+            var data = {
+                blogid: blogid,
+                blogUrl: blogUrl,
+                content: content,
+                nickname: nickname,
+                email: email,
+                avatar: avatar,
+                parentId: parentId,
+                parentName: parentName,
+                parentCommentId: parentCommentId1
+            };
+            if (content !== "" && content !== null && content !== undefined && nickname !== "" && nickname !== null && nickname !== undefined) {
+                //验证邮箱格式
+                const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                if (!emailReg.test(email)) {
+                    alert('邮箱格式错误');
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '/comments',
+                    data: data,
+                    dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded',
+                    success: function (req) {
+                        console.log(req)
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                })
+                alert('您的评论已成功投递至召田最帅boy，请耐心等待他审核吧！');
+                $('#aaa').val('');
+                //一秒后刷新页面
+                // setTimeout('location.reload()', 100);
+            } else {
+                alert("昵称和评论内容不能为空！")
+                return;
+            }
+        })
+    })
+</script>
+<!--<script type="application/javascript">-->
+<!--    &lt;!&ndash;公众号引流&ndash;&gt;-->
+<!--    const btw = new BTWPlugin();-->
+<!--    btw.init({-->
+<!--        id: 'container',-->
+<!--        blogId: '30424-1660991423874-171',-->
+<!--        name: '召田最帅boy',-->
+<!--        qrcode: 'https://zou2021.github.io/resume/static/image/mywechat.png',-->
+<!--        keyword: '博客',-->
+<!--    });-->
+<!--</script>-->
+<script th:inline="javascript">
+    $("#copy").click(function () {
+        var obj = document.getElementById("articleHref");
+        var input = document.createElement("input");
+        document.body.appendChild(input);
+        input.value = obj.href;
+        input.select();
+        try {
+            //进行复制到剪切板
+            if (document.execCommand("Copy", true, null)) {
+                //如果复制成功
+                alert("复制链接成功！赶紧分享给你的好友吧~");
+                //隐藏input框
+                input.hidden = "hidden";
+            } else {
+                //如果复制失败
+                alert("复制失败！");
+            }
+        } catch (err) {
+            //如果报错
+            alert("复制错误！")
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Zou Xiangfa" content="xf-zou@qq.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <link rel="shortcut icon" href="https://www.hqxiaozou.top/static/img/favicon.ico"/>
+    <title>狼了个狼网页版</title>
+    <style>
+        .A {
+            background-image: url(https://img0.baidu.com/it/u=2915591120,58539746&fm=253&fmt=auto&app=138&f=JPEG?w=50&h=75);
+            background-size: cover;
+        }
+
+        .B {
+            background-image: url(https://img2.baidu.com/it/u=1961605168,519023852&fm=253&fmt=auto&app=120&f=JPEG?w=200&h=200);
+            background-size: cover;
+        }
+
+        .C {
+            background-image: url(https://img1.baidu.com/it/u=1558460227,1600052005&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200);
+            background-size: cover;
+        }
+
+        .D {
+            background-image: url(https://img0.baidu.com/it/u=1367134673,2529600782&fm=253&fmt=auto&app=120&f=JPEG?w=200&h=200);
+            background-size: cover;
+        }
+
+        .E {
+            background-image: url(https://img1.baidu.com/it/u=2342405275,30063627&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200);
+            background-size: cover;
+        }
+
+        .F {
+            background-image: url(https://img2.baidu.com/it/u=794796699,2048913638&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200);
+            background-size: cover;
+        }
+
+        .G {
+            background-image: url(https://img2.baidu.com/it/u=2804974022,2583629637&fm=253&fmt=auto&app=138&f=JPEG?w=120&h=80);
+            background-size: cover;
+        }
+
+        .H {
+            background-image: url(https://img1.baidu.com/it/u=961754899,2161050074&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200);
+            background-size: cover;
+        }
+
+        .J {
+            background-image: url(https://img0.baidu.com/it/u=3372864484,86401414&fm=253&fmt=auto&app=138&f=JPEG?w=160&h=109);
+            background-size: cover;
+        }
+
+        .K {
+            background-image: url(https://img0.baidu.com/it/u=2447232726,212069368&fm=253&fmt=auto?w=200&h=200);
+            background-size: cover;
+        }
+
+        .L {
+            background-image: url(https://img2.baidu.com/it/u=3788646889,2975336153&fm=253&fmt=auto?w=200&h=200);
+            background-size: cover;
+        }
+
+        .M {
+            background-image: url(https://img1.baidu.com/it/u=1035241979,2591366575&fm=253&fmt=auto?w=130&h=170);
+            background-size: cover;
+        }
+
+        .N {
+            background-image: url(https://img0.baidu.com/it/u=1257446861,475247806&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200);
+            background-size: cover;
+        }
+
+        body {
+            background: url(https://img2.baidu.com/it/u=3202063201,1142127465&fm=253&fmt=auto&app=138&f=JPEG?w=254&h=154);
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            width: 100%;
+            height: 50px;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div class="header">
+
+</div>
+<div id="gameroom" style="float:left">
+</div>
+<div style="float:none"></div>
+<div style="float:left;width:110px;font-size:80px;font-weight:900;">
+    <div style="width:80px;padding-top:80px;">狼了个狼</div>
+</div>
+<script type="text/babel">
+
+    class CardSlot extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                slot0: '',
+                slot1: '',
+                slot2: '',
+                slot3: '',
+                slot4: '',
+                slot5: '',
+                slot6: ''
+            };
+        }
+
+        disCard(s) {
+            if (s.length > 0) {
+                return (<div class={s} style={
+                    {
+                        width: '50px',
+                        height: '75px',
+                        position: 'absolute',
+                        textAlign: 'center',
+                        top: 5,
+                        left: 5,
+                        fontSize: 40,
+                        fontWeight: 900
+                    }
+                }>
+
+                </div>)
+            } else {
+                return ''
+            }
+        }
+
+        render() {
+            return (
+                <div style={{
+                    position: 'absolute',
+                    display: 'block',
+                    bottom: 10,
+                    left: 50,
+                    width: 500,
+                    height: 90,
+                    backgroundColor: '#00ff00'
+                }}>
+                    <div style={{
+                        display: 'inline-block',
+                        position: 'absolute',
+                        width: 60,
+                        height: 90,
+                        backgroundColor: 'red',
+                        marginLeft: 10
+                    }}>
+                        {this.disCard(this.state.slot0)}
+                    </div>
+                    <div style={{
+                        display: 'inline-block',
+                        position: 'absolute',
+                        left: 70,
+                        width: 60,
+                        height: 90,
+                        backgroundColor: 'red',
+                        marginLeft: 10
+                    }}>
+                        {this.disCard(this.state.slot1)}
+                    </div>
+                    <div style={{
+                        display: 'inline-block',
+                        position: 'absolute',
+                        left: 140,
+                        width: 60,
+                        height: 90,
+                        backgroundColor: 'red',
+                        marginLeft: 10
+                    }}>
+                        {this.disCard(this.state.slot2)}
+                    </div>
+                    <div style={{
+                        display: 'inline-block',
+                        position: 'absolute',
+                        left: 210,
+                        width: 60,
+                        height: 90,
+                        backgroundColor: 'red',
+                        marginLeft: 10
+                    }}>
+                        {this.disCard(this.state.slot3)}
+                    </div>
+                    <div style={{
+                        display: 'inline-block',
+                        position: 'absolute',
+                        left: 280,
+                        width: 60,
+                        height: 90,
+                        backgroundColor: 'red',
+                        marginLeft: 10
+                    }}>
+                        {this.disCard(this.state.slot4)}
+                    </div>
+                    <div style={{
+                        display: 'inline-block',
+                        position: 'absolute',
+                        left: 350,
+                        width: 60,
+                        height: 90,
+                        backgroundColor: 'red',
+                        marginLeft: 10
+                    }}>
+                        {this.disCard(this.state.slot5)}
+                    </div>
+                    <div style={{
+                        display: 'inline-block',
+                        position: 'absolute',
+                        left: 420,
+                        width: 60,
+                        height: 90,
+                        backgroundColor: 'red',
+                        marginLeft: 10
+                    }}>
+                        {this.disCard(this.state.slot6)}
+                    </div>
+
+                </div>
+            );
+        }
+    }
+
+    class GameRoom extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                allCards: this.createCard(),
+                canClick: true
+            };
+        }
+
+        createCard() {
+            let allCards = []
+            let arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N']
+            let cardArr = []
+            for (let i = 0; i < 141; i += 3) {
+                let c = arr[i % 13]
+                cardArr.push(c)
+                cardArr.push(c)
+                cardArr.push(c)
+            }
+
+            for (let i = 0; i < 40; i++) {
+                allCards.push({
+                    key: (100 + i) + '',
+                    text: cardArr.splice([Math.floor(Math.random() * cardArr.length)], 1),
+                    levle: 0,
+                    parent: '',
+                    left: 90 + parseInt(i / 6) * 58,
+                    top: 10 + (i % 6) * 90
+                })
+            }
+
+
+            for (let i = 40; i < 70; i++) {
+                allCards.push({
+                    key: (100 + i) + '',
+                    text: cardArr.splice([Math.floor(Math.random() * cardArr.length)], 1),
+                    levle: 1,
+                    parent: '',
+                    left: 110 + parseInt((i - 40) / 5) * 58,
+                    top: 40 + (i % 5) * 105
+                })
+            }
+
+
+            for (let i = 70; i < 90; i++) {
+                allCards.push({
+                    key: (100 + i) + '',
+                    text: cardArr.splice([Math.floor(Math.random() * cardArr.length)], 1),
+                    levle: 2,
+                    parent: '',
+                    left: 120 + parseInt((i - 70) / 4) * 65,
+                    top: 80 + i % 4 * 110
+                })
+            }
+
+            for (let i = 90; i < 105; i++) {
+                allCards.push({
+                    key: (100 + i) + '',
+                    text: cardArr.splice([Math.floor(Math.random() * cardArr.length)], 1),
+                    levle: 3,
+                    parent: '',
+                    left: 130 + parseInt((i - 90) / 3) * 67,
+                    top: 125 + i % 3 * 120
+                })
+            }
+
+
+            for (let i = 105; i < 141; i++) {
+                allCards.push({
+                    key: (100 + i) + 'cart',
+                    text: cardArr.splice([Math.floor(Math.random() * cardArr.length)], 1),
+                    levle: i % 105,
+                    parent: '',
+                    left: 540 + i % 10 * 3,
+                    top: 30 + i % 105 * 12
+                })
+            }
+            return allCards
+
+        }
+
+        handleClick(t) {
+            let targetLeft = 65 + (3 * 70)
+            let diffLeft = targetLeft - this[t].state.left
+            let stepLeft = diffLeft * 5 / (680 - this[t].state.top)
+
+            let selectItem, selectIndex
+            for (let i = 0; i < this.state.allCards.length; i++) {
+                let item = this.state.allCards[i]
+                if (item.key === t) {
+                    selectItem = item
+                    selectIndex = i
+                    break
+                }
+            }
+
+            let haveCover = false;
+            for (let i = 0; i < this.state.allCards.length; i++) {
+                let item = this.state.allCards[i]
+                if (item.levle > selectItem.levle) {
+                    if (item.top < selectItem.top + 75 && item.top > selectItem.top - 75 && item.left < selectItem.left + 50 && item.left > selectItem.left - 75) {
+                        haveCover = true;
+                    }
+                }
+            }
+
+
+            if (haveCover) return;
+            if (this.state.canClick) {
+                this.setState(prevState => ({
+                    canClick: false
+                }));
+            } else {
+                return;
+            }
+
+            this.backInterval = setInterval(() => {
+                if (this[t].state.top >= 680) {
+                    clearInterval(this.backInterval)
+                    this[t].setState(prevState => ({
+                        dis: '0'
+                    }));
+
+                    let allCardsTemp = this.state.allCards
+                    allCardsTemp.splice(selectIndex, 1);
+                    this.setState(prevState => ({
+                        allCards: allCardsTemp,
+                        canClick: true
+                    }));
+
+                    let slotnum = {}
+                    for (let i = 0; i < 7; i++) {
+                        let s = this.cardSlot.state['slot' + i]
+                        if (s !== '') {
+                            if (slotnum[s]) {
+                                slotnum[s] = slotnum[s] + 1
+                            } else {
+                                slotnum[s] = 1
+                            }
+                        }
+                    }
+
+
+                    let tt = selectItem.text
+                    if (slotnum[tt]) {
+                        slotnum[tt] = slotnum[tt] + 1
+                    } else {
+                        slotnum[tt] = 1
+                    }
+                    console.log(slotnum)
+
+                    let slotState = {}
+                    let snum = 0
+                    for (let k in slotnum) {
+                        if (slotnum[k] < 3) {
+                            slotState['slot' + snum] = k
+                            snum++
+                            if (slotnum[k] === 2) {
+                                slotState['slot' + snum] = k
+                                snum++
+                            }
+                        }
+                    }
+
+                    for (let k = snum; k < 7; k++) {
+                        slotState['slot' + k] = ''
+                    }
+                    this.cardSlot.setState(prevState => (slotState));
+                    if (snum === 7) {
+                        alert('Game Over')
+                        location.reload();
+                    }
+                } else {
+                    this[t].setState(prevState => ({
+                        top: this[t].state.top + 5,
+                        left: this[t].state.left + stepLeft
+                    }));
+                }
+            }, 10)
+        }
+
+        render() {
+            return (
+                <div style={{
+                    position: 'absolute',
+                    display: 'block',
+                    top: 50,
+                    bottom: 100,
+                    left: 50,
+                    width: 650,
+                    height: 900
+                }}>
+                    <CardSlot ref={foo => {
+                        this.cardSlot = foo
+                    }}/>
+                    {
+                        this.state.allCards.map((item, index) => {
+                            return <Card key={item.key} ref={foo => {
+                                this[item.key] = foo
+                            }} handleClick={() => {
+                                this.handleClick(item.key)
+                            }} name={item.text} top={item.top} left={item.left} dis={'1'}/>
+                        })
+                    }
+
+                </div>
+            );
+        }
+    }
+
+    class Card extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                top: this.props.top,
+                left: this.props.left,
+                dis: this.props.dis
+            };
+            this.handleClick = this.props.handleClick;
+        }
+
+        render() {
+            return (
+                <div class={this.props.name} style={
+                    {
+                        width: '50px',
+                        height: '75px',
+                        position: 'absolute',
+                        textAlign: 'center',
+                        top: this.state.top,
+                        left: this.state.left,
+                        fontSize: 40,
+                        margin: 3,
+                        fontWeight: 900,
+                        boxShadow: '20px 20px 20px #000000',
+                        border: 'white 4px solid',
+                        display: this.state.dis === '1' ? 'block' : 'none'
+                    }
+                } onClick={this.handleClick}>
+
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(
+        <GameRoom></GameRoom>,
+        document.getElementById('gameroom')
+    );
+</script>
+</body>
+</html>

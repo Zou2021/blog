@@ -1,0 +1,42 @@
+server:
+  port: 8091
+logging:
+  level:
+    org.springframework: info
+    data: DEBUG
+    security: DEBUG
+  config: classpath:logback-spring.xml
+spring:
+  mvc:
+    static-path-pattern: /**
+  mail:
+    username: 1565453341@qq.com
+    password: poobscqeszwnihfa
+    host: smtp.qq.com
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+    default-encoding: utf-8
+  thymeleaf:
+    servlet:
+      content-type: text/html
+    encoding: UTF-8
+    cache: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://47.100.15.29:3306/myblog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: zou0505.
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  typeAliasesPackage: com.zou.blog.model.domain
+  mapperLocations: classpath:mapper/*/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

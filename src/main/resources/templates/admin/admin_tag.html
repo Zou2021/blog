@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:thSys="">
+<div th:replace="admin/module/macros :: head('标签管理')"></div>
+<body class="app sidebar-mini rtl">
+	<main class="app-content">
+	<div th:replace="admin/module/macros :: header"></div>
+	<div th:replace="admin/module/macros :: sidebar"></div>
+	<div class="app-title">
+		<div>
+			<h1>标签</h1>
+		</div>
+		<ul class="app-breadcrumb breadcrumb">
+			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+			<li class="breadcrumb-item"><a href="/admin/tag">标签</a></li>
+		</ul>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="tile">
+				<div class="row">
+					<div class="col-lg-5">
+						<th:block th:if="${tag} == null ">
+							<h4 class="tile-title">添加标签</h4>
+						</th:block>
+						<th:block th:if="${tag} != null">
+							<h4 class="tile-title">修改标签</h4>
+						</th:block>
+						<form action="/admin/tag/save" method="post" autocomplete="off">
+							<input type="hidden" name="tagId" id="tagid"
+								th:value="${tag!=null ? tag.tagId :''}">
+							<div class="form-group">
+								<label class="col-form-label" for="inputDefault">*名称<span
+									data-toggle="tooltip" data-placement="top" title="*页面上所显示的名称"
+									style="cursor: pointer"> <i
+										class="fa fa-question-circle" aria-hidden="true"></i></label> <input
+									class="form-control" id="inputDefault"
+									th:value="${tag != null ? tag.tagName : ''}" name="tagName"
+									type="text">
+							</div>
+							<div class="form-group">
+								<label class="col-form-label" for="inputDefault">*路径名称<span
+									data-toggle="tooltip" data-placement="top" title="*这是文章路径上显示的名称，最好为英文 "
+									style="cursor: pointer"> <i
+										class="fa fa-question-circle" aria-hidden="true"></i></label> <input
+									class="form-control" id="inputDefault"
+									th:value="${tag != null ? tag.tagUrl : ''}" type="text"
+									name="tagUrl">
+							</div>
+							<div class="tile-footer">
+								<button class="btn btn-sm btn-outline-primary" type="submit">保存标签</button>
+								<th:block th:if="${tag} != null">
+									<a class="btn btn-sm btn-outline-info" href="/admin/tag">返回添加</a>
+								</th:block>
+							</div>
+						</form>
+					</div>
+					<div class="col-lg-7">
+						<h4 class="tile-title">所有标签</h4>
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>名称</th>
+										<th>路径名称</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="tag : ${tags}">
+										<td th:text="${tag.tagName}"></td>
+										<td th:text="${tag.tagUrl}"></td>
+										<td><a class="btn btn-sm btn-outline-primary"
+											th:href="@{/admin/tag/edit(tagId=${tag.tagId})}">修改</a>
+											<button class="btn btn-sm btn-outline-danger"
+												th:onclick="'javascript:showModel('+${tag.tagId}+')'">删除</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	</main>
+	<!-- 删除确认弹出层 -->
+	<div th:replace="admin/module/macros :: remove"></div>
+	<div th:replace="admin/module/macros :: comm"></div>
+	<div th:replace="admin/module/macros :: bootstrapValidator"></div>
+	<script type="text/javascript">
+	$(function(){
+		$("form").bootstrapValidator({
+			message: 'This value is not valid',
+           　		feedbackIcons: {
+               　　　　　　　　valid: 'glyphicon glyphicon-ok',
+               　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+               　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+           　　　　　　　　   },
+            fields: {
+            	tagName: {
+                   message: '名称验证失败',
+                   validators: {
+                       notEmpty: {
+                           message: '名称不能为空'
+                       }
+                   }
+               },
+               tagUrl: {
+            	   message: '路径名称验证失败',
+                   validators: {
+                       notEmpty: {
+                           message: '路径名称不能为空'
+                       }
+                   }
+               }
+           }
+		});
+	});
+		function showModel(tagId) {
+			$("#tagid").val(tagId);
+			console.log($("#tagid"));
+			$("#removeModal").modal();
+		}
+		function remove() {
+			window.location.href = "/admin/tag/remove?tagId="
+					+ $("#tagid").val();
+		}
+	</script>
+</body>
+</html>

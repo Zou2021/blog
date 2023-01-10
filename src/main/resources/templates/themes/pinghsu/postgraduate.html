@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:thSys="" th:fragment="header(title,keywords)">
+<head>
+    <link rel="shortcut icon" th:href="@{/static/img/favicon.ico}"/>
+    <title>考研倒计时</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+        .center-in-center {
+            position: absolute;
+            width: auto; /*宽度自适应*/
+            white-space: nowrap; /*内容超出不换行*/
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .mydiv {
+            width: 1200px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            min-width: 1000px;
+            z-index: -10;
+            zoom: 1;
+            background-color: #fff;
+            background-size: cover;
+            background-attachment: fixed;
+            background: url(https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fclubimg.club.vmall.com%2Fdata%2Fattachment%2Fforum%2F202005%2F31%2F190503jmcz0aptytylmkt3.jpg&refer=http%3A%2F%2Fclubimg.club.vmall.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1638950992&t=e9caa42f410753b0d9673c1e16c83cea);
+            background-repeat: no-repeat;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-position: center0;
+        }
+
+        .ant-btn {
+            line-height: 1.499;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+            white-space: nowrap;
+            text-align: center;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 0.5em;
+            -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+            cursor: pointer;
+            -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            height: 45px;
+            padding: 0 15px;
+            font-size: 2vw;
+            font-family: "黑体";
+            border-radius: 4px;
+            color: rgb(83, 224, 224);
+            background-color: rgba(238, 247, 223, 0.21);
+            border-color: #d9d9d9;
+            top: 0;
+            left: 0;
+        }
+
+        .ant-btn:hover {
+            background-color: rgba(0, 168, 255, 0.6);
+        }
+
+        h1 {
+            font-size: 45px;
+            font-weight: 300;
+            font-family: "STXingkai";
+            color: #fff;
+            letter-spacing: 7px;
+            margin: 65px auto;
+        }
+
+        .w3layoutscontaineragileits {
+            width: 30%;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+        }
+
+        h2 {
+            font-size: 3.6vw;
+            font-weight: 300;
+            font-family: "STXingkai";
+            margin-bottom: 30px;
+            color: rgb(235, 163, 10);
+            text-transform: uppercase;
+            display: inline;
+        }
+
+        .smart-green {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 700px;
+            height: 400px;
+            background-color: rgba(215, 146, 19, 0.2);
+            padding: 30px 30px 20px 30px;
+            font: 12px Arial, Helvetica, sans-serif;
+            color: #666;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+        }
+
+        .smart-green h1 {
+            font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
+            padding: 20px 0px 20px 40px;
+            display: block;
+            margin: -30px -30px 10px -30px;
+            color: #FFF;
+            background: #9DC45F;
+            text-shadow: 1px 1px 1px #949494;
+            border-radius: 5px 5px 0px 0px;
+            -webkit-border-radius: 5px 5px 0px 0px;
+            -moz-border-radius: 5px 5px 0px 0px;
+            border-bottom: 1px solid #89AF4C;
+        }
+
+        .smart-green h1 > span {
+            display: block;
+            font-size: 11px;
+            color: #FFF;
+        }
+
+        .smart-green label {
+            display: block;
+            margin: 0px 0px 5px;
+        }
+
+        .smart-green label > span {
+            float: left;
+            margin-top: 10px;
+            color: #5E5E5E;
+        }
+
+        .smart-green input[type="text"], .smart-green input[type="email"], .smart-green textarea, .smart-green select {
+            color: #555;
+            height: 30px;
+            width: 100%;
+            padding: 0 0 0 10px;
+            margin-top: 2px;
+            border: 1px solid #E5E5E5;
+            background: #FBFBFB;
+            outline: 0;
+            -webkit-box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+            box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+            font: normal 14px/14px Arial, Helvetica, sans-serif;
+        }
+
+        .smart-green textarea {
+            height: 100px;
+            padding-top: 10px;
+        }
+
+        textarea {
+            background-color: rgba(216, 214, 210, 0.25);
+            width: 700px;
+            height: 400px;
+            font-size: 15px;
+        }
+    </style>
+    <script type="text/javascript">
+        var beijing = ['https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fclubimg.club.vmall.com%2Fdata%2Fattachment%2Fforum%2F202005%2F31%2F190503jmcz0aptytylmkt3.jpg&refer=http%3A%2F%2Fclubimg.club.vmall.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F4851efee9669ecb5248a29766bdbd8acdec8ae71.png&refer=http%3A%2F%2Fi0.hdslb.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F2d190fa566b147717bd0359ccf63e2a1c281cf65.jpg&refer=http%3A%2F%2Fi0.hdslb.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2Fc959e385721544cc7d206ccab70ee46eea911963.jpg&refer=http%3A%2F%2Fi0.hdslb.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F3e1cfe84357dd9653c41ddc9de31c695d87855bf.jpg&refer=http%3A%2F%2Fi0.hdslb.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-18469d77ca48bfd801419ed3855c3e0e_r.jpg%3Fsource%3D1940ef5c&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F665c12e12678acb3cc24dd66e18915a7f9b8bf27.jpg&refer=http%3A%2F%2Fi0.hdslb.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fqqpublic.qpic.cn%2Fqq_public%2F0%2F0-2240245848-1AB4AA4A3ADAFBD8976BF16488DC033F%2F0%3Ffmt%3Djpg%26size%3D91%26h%3D506%26w%3D900%26ppv%3D1.jpg&refer=http%3A%2F%2Fqqpublic.qpic.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg',
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.lnstzy.cn%2Faoaodcom%2F2019-09%2F22%2F201909220826387620.jpg.w3840.h2160.jpg%3Fdown&refer=http%3A%2F%2Fimage.lnstzy.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg'
+        ];
+        var a = 1;
+
+        function huanfu() {
+            if (a >= 9) {
+                a = 0;
+            } else {
+                document.body.style.backgroundImage = "url('" + beijing[a] + "')";
+                a++;
+            }
+        }
+
+        //获取当前位置
+        window.οnlοad = getCurrentPosit;
+
+        function getCurrentPosit() {
+            var map = new BMap.Map('getCity');
+        }
+
+        function myFun(result) {
+            var cityName = result.name;
+            getWeatherDatasFun(cityName);
+            map.setCenter(cityName);
+            alert("当前定位城市:" + cityName);
+        }
+
+        var myCity = new BMap.LocalCity();
+
+        myCity.get(myFun);
+    </script>
+
+
+    <script src="http://ip.ws.126.net/ipquery"></script>
+    <script type="text/javascript">
+        function dynamicIp(cityName) {
+            $("#ctiyName").html(cityName);
+            var url = encodeURI("http://wthrcdn.etouch.cn/weather_mini?city=" + cityName);
+            $.get({
+                url: url,
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    var todayWeather = data.data.forecast[0];
+                    $("#ganmao").html("穿衣指数:" + data.data.ganmao);//穿衣
+                    var fengli = todayWeather.fengli;
+                    $("#fengx").html("风向风力:" + todayWeather.fengxiang + fengli.substring(fengli.indexOf("T") + 3, fengli.indexOf("T") + 5));//风向
+                    $("#heightwend").html("最" + todayWeather.high);//最高温
+                    $("#low").html("最" + todayWeather.low);//最低温温
+                    $("#wendu").html(data.data.wendu);//当前温度
+                    var arr = todayWeather.date.split("日");
+                    $("#date").html(arr[0] + "日<br>" + arr[1]);//当前日期
+                    var type = todayWeather.type;//天气
+                    if (type === "晴") {
+                        changeWeather(weather[4]);
+                    } else if (type === "多云") {
+                        changeWeather(weather[1]);
+                    } else if (type === "小雨") {
+                        changeWeather(weather[2]);
+                    } else if (type === "雪") {
+                        changeWeather(weather[0]);
+                    } else if (type === "雷阵雨") {
+                        changeWeather(weather[3]);
+                    }
+                    $("#table_next").width($(".details").width() + 86);
+                    for (var i = 1; i < data.data.forecast.length; i++) {
+                        var arr = data.data.forecast[i].date.split("日");
+                        var type = data.data.forecast[i].type;
+                        $("#content" + i).html(arr[1]);//日期
+                        if (type === "晴") {
+                            document.getElementById('svgDiv' + i).className = 'sunny';
+                        } else if (type === "多云") {
+                            document.getElementById('svgDiv' + i).className = 'cloudy';
+                        } else if (type === "小雨") {
+                            document.getElementById('svgDiv' + i).className = 'rainy';
+                        } else if (type === "雪") {
+                            document.getElementById('svgDiv' + i).className = 'snowy';
+                        } else if (type === "雷阵雨") {
+                            document.getElementById('svgDiv' + i).className = 'stormy';
+                        }
+                    }
+                }
+            });
+
+        }
+
+    </script>
+
+</head>
+<body class="background">
+<button class="ant-btn" onclick="huanfu()">切换背景</button>
+
+<div class="center-in-center">
+    <h2>距离2023年考研已经过去了：</h2>
+    <h2 id="t_d"></h2>
+    <h2><span id="t_h"></span></h2>
+    <h2><span id="t_m"></span></h2>
+    <h2><span id="t_s"></span></h2>
+</div>
+<script type="text/javascript">
+    function getRTime() {
+        var EndTime = new Date('2022/12/25 17:00:00'); //截止时间
+        var NowTime = new Date();
+        var t = -(EndTime.getTime() - NowTime.getTime());
+
+        var d = Math.floor(t / 1000 / 60 / 60 / 24);
+        var h = Math.floor(t / 1000 / 60 / 60 % 24);
+        var m = Math.floor(t / 1000 / 60 % 60);
+        var s = Math.floor(t / 1000 % 60);
+
+        document.getElementById("t_d").innerHTML = d + "天";
+        document.getElementById("t_h").innerHTML = h + "时";
+        document.getElementById("t_m").innerHTML = m + "分";
+        document.getElementById("t_s").innerHTML = s + "秒";
+    }
+
+    setInterval(getRTime, 1000);
+</script>
+
+<script type="text/javascript">
+    dynamicIp(lc);//这是获取天气调用的方法 lc就是城市名称
+</script>
+</body>
+</html>
