@@ -26,8 +26,8 @@
                             <div class="post-list-item-container ">
                                 <div class="item-label ">
                                     <div class="item-title">
-                                        <a th:href="@{'/post/'+${article.articleUrl}}" th:text="${article.articleTitle}"
-                                           target="_blank"></a>
+                                        <a th:href="@{'/post/'+${article.articleUrl}}"
+                                           th:text="${article.articleTitle}"></a>
                                     </div>
                                     <div class="item-meta clearfix">
                                         <div th:class="'item-meta-ico '+${commons.show_icon(article.id)} "
