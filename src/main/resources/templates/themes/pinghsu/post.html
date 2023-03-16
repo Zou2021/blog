@@ -27,20 +27,21 @@
     </div>
     <div id="post-content" class="post-content" itemprop="articleBody">
         <p class="post-tags" th:utext="${commons.show_tags(article.tagsUrl,article.tagsName)}"></p>
-        <!--公众号引流-->
-        <!--        <div id="container" style="padding: 15px 0 0 0">-->
-        <th:block th:utext="${article.articleContent}"/>
-        <div style="text-align: right;padding-bottom: 10px;padding-right: 10px;">
-            <a id="articleHref" th:href="@{/post/{url}(url=${article.articleUrl})}"></a>
-            <button type="button" id="copy" class="small ui teal basic button">
-                <i class="copy icon"></i>&nbsp;复制文章链接
-            </button>
+        <!--公众号引流 start-->
+        <div id="container" style="padding: 15px 0 0 0">
+            <th:block th:utext="${article.articleContent}"/>
+            <div style="text-align: right;padding-bottom: 10px;padding-right: 10px;">
+                <a id="articleHref" th:href="@{/post/{url}(url=${article.articleUrl})}"></a>
+                <button type="button" id="copy" class="small ui teal basic button">
+                    <i class="copy icon"></i>&nbsp;复制文章链接
+                </button>
+            </div>
+            <p class="post-info" style="padding-bottom: 0">
+                本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名，转载请标明出处。<br/>最后编辑时间为:
+                <th:block th:text="${#dates.format(article.articleUpdatetime,'yyyy/MM/dd HH:mm:ss')}"/>
+            </p>
         </div>
-        <p class="post-info" style="padding-bottom: 0">
-            本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名，转载请标明出处。<br/>最后编辑时间为:
-            <th:block th:text="${#dates.format(article.articleUpdatetime,'yyyy/MM/dd HH:mm:ss')}"/>
-        </p>
-        <!--        </div>-->
+        <!--公众号引流 end-->
         <!--赞赏-->
         <div class="ui center aligned basic segment">
             <div class="ui blue basic circular button" notice-key="msg" for-key="name"
@@ -183,7 +184,7 @@
     </div>
 </article>
 <div th:replace="themes/pinghsu/footer :: footer"></div>
-<!--<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>-->
+<script src="https://readmore.openwrite.cn/js/readmore.js" type="text/javascript"></script>
 <script type="application/javascript">
     <!--根据QQ自动获取头像信息-->
     $('#QQ').blur(function () {
@@ -312,17 +313,17 @@
         })
     })
 </script>
-<!--<script type="application/javascript">-->
-<!--    &lt;!&ndash;公众号引流&ndash;&gt;-->
-<!--    const btw = new BTWPlugin();-->
-<!--    btw.init({-->
-<!--        id: 'container',-->
-<!--        blogId: '30424-1660991423874-171',-->
-<!--        name: '召田最帅boy',-->
-<!--        qrcode: 'https://zou2021.github.io/resume/static/image/mywechat.png',-->
-<!--        keyword: '博客',-->
-<!--    });-->
-<!--</script>-->
+<script>
+    <!--公众号引流-->
+    const btw = new BTWPlugin();
+    btw.init({
+        id: 'container',
+        blogId: '30424-1666258323898-358',
+        name: '召田最帅boy',
+        qrcode: 'https://zou2021.github.io/resume/static/image/mywechat.png',
+        keyword: '博客',
+    });
+</script>
 <script th:inline="javascript">
     $("#copy").click(function () {
         var obj = document.getElementById("articleHref");
