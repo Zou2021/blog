@@ -42,11 +42,11 @@ public interface CommentInfoConverter {
         switch (request.getParameter("email")) {
             case "1565453341@qq.com":
                 comments.setNickname("召田最帅boy");
-                comments.setAvatar("https://img-blog.csdnimg.cn/a4e106d8f8934ad397f852ebfeba8c55.png");
+                comments.setAvatar("https://img.aliyundrive.com/avatar/a53edf897adc4624a3b7590a45005ac4.jpeg");
                 break;
             case "1194165072@qq.com":
                 comments.setNickname("琪");
-                comments.setAvatar("https://img-blog.csdnimg.cn/0381d4b0e4234286a4c7d6cb45d1701f.bmp");
+                comments.setAvatar("https://www.hqxiaozou.top/upload/2023/3/mybaby20230313093134328.jpg");
                 break;
             default:
                 comments.setNickname(request.getParameter("nickname"));
