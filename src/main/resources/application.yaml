@@ -11,7 +11,7 @@ spring:
     static-path-pattern: /**
   mail:
     username: 1565453341@qq.com
-    password: puatpqivcfnfjfij
+    password: # QQ邮箱配置
     host: smtp.qq.com
     properties:
       mail:
@@ -26,9 +26,9 @@ spring:
     cache: false
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://47.100.15.29:3306/myblog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/myblog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     username: root
-    password: zou0505.
+    password: # MySQL密码配置
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
   typeAliasesPackage: com.zou.blog.model.domain
