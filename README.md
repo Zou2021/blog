@@ -9,7 +9,7 @@
 ## 使用说明
 
 1. 下载代码
-   `git clone https://gitee.com/zou-xiangfa/blog.git`
+   `git clone https://github.com/Zou2021/blog.git`
 2. 导入sql文件myblog至数据库
 3. 到src/main/resources下的application.yaml下修改你的数据库链接
 4. 保存好以后 mvn package打包
@@ -19,39 +19,39 @@
 
 ## 图片演示
 
-![image-20230419135910803](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/01.png)
+![image-20230419135910803](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/01.png)
 
-![image-20230419135930395](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/02.png)
+![image-20230419135930395](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/02.png)
 
-![image-20230419140022787](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/03.png)
+![image-20230419140022787](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/03.png)
 
-![image-20230419140221408](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/04.png)
+![image-20230419140221408](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/04.png)
 
-![image-20230419140247322](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/05.png)
+![image-20230419140247322](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/05.png)
 
-![image-20230419140312008](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/06.png)
+![image-20230419140312008](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/06.png)
 
-![image-20230419140344409](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/07.png)
+![image-20230419140344409](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/07.png)
 
-![image-20230419140358895](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/08.png)
+![image-20230419140358895](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/08.png)
 
-![image-20230419140413779](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/09.png)
+![image-20230419140413779](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/09.png)
 
-![image-20230419140425136](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/10.png)
+![image-20230419140425136](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/10.png)
 
-![image-20230419140434527](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/11.png)
+![image-20230419140434527](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/11.png)
 
-![image-20230419140443660](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/12.png)
+![image-20230419140443660](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/12.png)
 
-![image-20230419140605490](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/14.png)
+![image-20230419140605490](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/14.png)
 
-![image-20230419140620621](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/15.png)
+![image-20230419140620621](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/15.png)
 
-![image-20230419140632989](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/16.png)
+![image-20230419140632989](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/16.png)
 
-![image-20230419140649945](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/18.png)
+![image-20230419140649945](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/18.png)
 
-![image-20230419140754490](https://gitee.com/zou-xiangfa/blog/raw/master/imgs/19.png)
+![image-20230419140754490](https://raw.githubusercontent.com/Zou2021/blog/refs/heads/master/imgs/19.png)
 
 ## 开源协议
 
